@@ -6,7 +6,7 @@
 // @description	Generates statistics that you can past into your profile.
 // @include http://www.geocaching.com/*
 // @license	MIT License; http://www.opensource.org/licenses/mit-license.php
-// @version 0.86
+// @version 0.87.FINAL
 // @icon http://s18.postimage.org/za0ncpqk5/gcpsb.png
 // @require  http://github.com/sizzlemctwizzle/GM_config/raw/master/gm_config.js
 // @require http://userscripts.org/scripts/source/50018.user.js
@@ -17,8 +17,12 @@
 
  CHANGE LOG
 
+ --- version 0.87.FINAL
+ * Fixed the Latest Region header spacing.
+ * Added the final version notice.
+
  --- version 0.86
- * Made image background transparent.
+ * Made image background transparent. 
 
  --- version 0.85
  * Finally got it back in shape.
@@ -115,7 +119,7 @@
  --- 
 */
 
-var version= "0.86";
+var version= "0.87.FINAL";
 var SUC_script_num = 131166;
 
 // Configuration dialogue.
@@ -174,6 +178,17 @@ GM_registerMenuCommand("GC Profile Stats Builder", function() {
 if(!prefDate){
   GM_config.open();  
 }
+/////////////////////////////////////////////////////
+// Show final update notice if not previously shown.
+var prefNotice = GM_getValue("GCS_final_notice");
+if(!prefNotice){
+  alert("This is the final Emergency Release of the GC Profile Stats Builder.\n\nThe recent improvements are now available in the original version, found at " +
+    "\nhttp://userscripts.org/scripts/show/106499" +
+    "\nand future development will be conducted jointly on that version. Please remove this " +
+    "Emergency Release and reinstall the original when you can.\n\nMany thanks for using our script.");
+  GM_setValue('GCS_final_notice', true);
+}
+/////////////////////////////////////////////////////
 
 
 function parseHTML(data){
@@ -430,7 +445,7 @@ function drawAlphaChallenge(){
   top[COUNTRY]=0;
 
   var t="<br><h3>Alphanumeric Challenge</h3>";
-  t+="<table><tr><th>Alpha</th><th>Latest Cache</th><th><span title='District/State/Region' >LatestRegion</span></th><th>Latest Country</th></tr>";
+  t+="<table><tr><th>Alpha</th><th>Latest Cache</th><th><span title='District/State/Region'>Latest Region</span></th><th>Latest Country</th></tr>";
   for (var i in stats[NAME]){
     var a = stats[NAME][i] ? stats[NAME][i].charAt(0).toUpperCase():'';
     if ( ( alphanum.indexOf(a) >= 0 ) && !challenge[a]) {
